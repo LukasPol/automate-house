@@ -3,13 +3,15 @@ import paho.mqtt.subscribe as subscribe
 from time import sleep
 from json import loads
 import configparser
+from playsound import playsound
 
 
 def on_message(client, userdate, message):
     dados = loads(str(message.payload.decode()))
     status = dados["field1"]
     if int(status) == 1:
-        print(f"Geladeira ABRIU")
+        playsound('song.mp3')
+        sleep(5)
 
 
 config = configparser.ConfigParser()
@@ -31,5 +33,5 @@ subscribe.callback(
     auth={"username": username, "password": password},
 )
 
-while True:
-    sleep(20)
+# while True:
+#     sleep(20)
